@@ -269,3 +269,29 @@ if (process.env.TARGET) {
   exports.getBuild = genConfig
   exports.getAllBuilds = () => Object.keys(builds).map(genConfig)
 }
+
+
+// getAllBuilds()返回相应配置的对象数组
+// let obj = {
+//   param1: {
+//       name: 'Li',
+//       age: 12
+//   },
+//   param2: {
+//       name: 'Za',
+//       age: 14
+//   }
+// }
+// function getConfig (name) {
+//   let config = obj[name]
+//   return {
+//       name: config.name,
+//       age: config.age
+//   }
+// }
+// let result = Object.keys(obj).map(getConfig)
+// console.log(result)
+// [
+//   {name: 'Li', age: 12},
+//   {name: 'Za', age: 14}
+// ]
