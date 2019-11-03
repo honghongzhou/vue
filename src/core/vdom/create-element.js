@@ -25,6 +25,7 @@ const ALWAYS_NORMALIZE = 2
 
 // wrapper function for providing a more flexible interface
 // without getting yelled at by flow
+// createElement方法实际上是对_createElement的封装，它允许传入的参数更灵活，在处理这些参数之后，才会调用真正的创建VNode的_createElement函数
 export function createElement (
   context: Component,
   tag: any,
@@ -43,7 +44,10 @@ export function createElement (
   }
   return _createElement(context, tag, data, children, normalizationType)
 }
-
+// 两个重要的流程
+// 1.children的规范化:virtual dom是一个树状结构,每一个vnode可能都有若干个子节点,这些子节点也应该是vnode类型,_createElement的第四个参数是children为任意类型.因此我们需要把它们规范成vnode类型.
+//  2.vnode的创建
+// createElement创建vnode过程,vnode的children也是vnode类型,这样就形成了一个vnode tree
 export function _createElement (
   context: Component,
   tag?: string | Class<Component> | Function | Object,
@@ -72,6 +76,7 @@ export function _createElement (
     isDef(data) && isDef(data.key) && !isPrimitive(data.key)
   ) {
     if (!__WEEX__ || !('@binding' in data.key)) {
+
       warn(
         'Avoid using non-primitive value as key, ' +
         'use string/number value instead.',
@@ -97,6 +102,7 @@ export function _createElement (
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)
     if (config.isReservedTag(tag)) {
+      // 如果是内置的一些节点
       // platform built-in elements
       if (process.env.NODE_ENV !== 'production' && isDef(data) && isDef(data.nativeOn)) {
         warn(
@@ -110,8 +116,10 @@ export function _createElement (
       )
     } else if ((!data || !data.pre) && isDef(Ctor = resolveAsset(context.$options, 'components', tag))) {
       // component
+      // 如果是已注册的组件名,则创建一个组件类型的vnode
       vnode = createComponent(Ctor, data, context, children, tag)
     } else {
+      // 创建一个未知的标签的vnode
       // unknown or unlisted namespaced elements
       // check at runtime because it may get assigned a namespace when its
       // parent normalizes children

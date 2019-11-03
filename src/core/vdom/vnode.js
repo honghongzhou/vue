@@ -1,5 +1,8 @@
 /* @flow */
-
+// virtual dom 借鉴了一个开源库（snabbdom）的实现，然后加入了一些vue.js特色的东西。
+// 其实 VNode 是对真实DOM的一种描述，它的核心定义是几个关键属性，标签名，数据，子节点，健值等，其他属性都是用来扩展VNode的灵活性以及实现一些特殊feature的。
+// 由于VNode只是用来映射到真实的DOM的渲染，不需要包含DOM的操作方法，因此它是非常轻量和简单的。
+// 映射到真实的DOM实际上要经历VNode的create，diff，patch等过程，在vue.js中，vnode的create是通过createElement方法创建的
 export default class VNode {
   tag: string | void;
   data: VNodeData | void;

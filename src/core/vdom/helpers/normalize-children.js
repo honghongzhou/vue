@@ -15,6 +15,9 @@ import { isFalse, isTrue, isDef, isUndef, isPrimitive } from 'shared/util'
 // normalization is needed - if any child is an Array, we flatten the whole
 // thing with Array.prototype.concat. It is guaranteed to be only 1-level deep
 // because functional components already normalize their own children.
+// simpleNormalizeChildren 方法调用场景是render方法是编译生成的,理论上编译生成的children
+// 都已经是vnode类型了,但是这里有一个例外,就是function component函数式组件返回的是一个数组
+// 而不是一个根节点,所以通过Array.prototype.concat方法把整个数组打平,让它的深度只有一层.
 export function simpleNormalizeChildren (children: any) {
   for (let i = 0; i < children.length; i++) {
     if (Array.isArray(children[i])) {
@@ -28,6 +31,10 @@ export function simpleNormalizeChildren (children: any) {
 // e.g. <template>, <slot>, v-for, or when the children is provided by user
 // with hand-written render functions / JSX. In such cases a full normalization
 // is needed to cater to all possible types of children values.
+// normalizeChildren 方法的调用有两种场景
+//⼀个场景是 render 函数是⽤户⼿写的，当children 只有⼀个节点的时候，Vue.js 从接⼝层⾯允许
+// ⽤户把 children 写成基础类型⽤来创建单个简单的⽂本节点，这种情况会调⽤ createTextVNode 
+// 创建⼀个⽂本节点的 VNode；另⼀个场景是当编译 slot 、 v-for 的时候会产⽣嵌套数组的情况，会调⽤ normalizeArrayChildren ⽅法，
 export function normalizeChildren (children: any): ?Array<VNode> {
   return isPrimitive(children)
     ? [createTextVNode(children)]

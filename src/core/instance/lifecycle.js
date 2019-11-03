@@ -56,6 +56,7 @@ export function initLifecycle (vm: Component) {
 }
 
 export function lifecycleMixin (Vue: Class<Component>) {
+  // update
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     const vm: Component = this
     const prevEl = vm.$el
@@ -138,6 +139,9 @@ export function lifecycleMixin (Vue: Class<Component>) {
   }
 }
 
+// 核心就是：调用vm._render()生成vnode，再实例化渲染一个watcher，在它的回调函数中会调用updateComponent方法，最终调用vm._update更新DOM。
+// watcher在这里起两个作用，一个是初始化的时候会执行回调函数，另一个是当vm实例中的监测的数据发生变化的时候执行回调函数。
+// 函数的最后判断为根节点的时候设置vm._isMounted为true，表示这个实例已经挂在了，同时执行mounted钩子函数。这里注意vm.$vnode表示vue实例的父虚拟Node，所以它为null则表示当前是根vue的实例。
 export function mountComponent (
   vm: Component,
   el: ?Element,

@@ -12,6 +12,8 @@ import { extend, mergeOptions, formatComponentName } from '../util/index'
 
 let uid = 0
 
+// 合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化data，props，computed， watcher等
+// 在初始化到最后，检测到如果有el属性，就调用vm.$mount方法挂在到vm，挂载的目标是最终将模板渲染成DOM
 export function initMixin (Vue: Class<Component>) {
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
