@@ -66,6 +66,7 @@ function createKeyToOldIdx (children, beginIdx, endIdx) {
   }
   return map
 }
+// 其中定义了一系列的辅助函数，返回patch方法，这个方法就是赋值给vm._update里面的__patch__方法
 
 export function createPatchFunction (backend) {
   let i, j
@@ -121,7 +122,7 @@ export function createPatchFunction (backend) {
   }
 
   let creatingElmInVPre = 0
-
+  // crateElm通过虚拟节点创建真实的dom，并插入它的父节点中。
   function createElm (
     vnode,
     insertedVnodeQueue,
@@ -141,6 +142,7 @@ export function createPatchFunction (backend) {
     }
 
     vnode.isRootInsert = !nested // for transition enter check
+    // 如果是组件,createComponent 会返回true
     if (createComponent(vnode, insertedVnodeQueue, parentElm, refElm)) {
       return
     }
@@ -206,7 +208,7 @@ export function createPatchFunction (backend) {
       insert(parentElm, vnode.elm, refElm)
     }
   }
-
+  // 在完成组件的patch过程之后,最后通过insert完成组件的dom插入
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
     if (isDef(i)) {
@@ -268,7 +270,8 @@ export function createPatchFunction (backend) {
     // a reactivated keep-alive component doesn't insert itself
     insert(parentElm, vnode.elm, refElm)
   }
-
+// 把dom插入到父节点中，因为是递归调用，子元素优先调用insert，所以整个vnode树节点的插入顺序是先子后父
+// 这些辅助方法在 src/platforms/web/runtime/node-ops.js
   function insert (parent, elm, ref) {
     if (isDef(parent)) {
       if (isDef(ref)) {
@@ -280,7 +283,7 @@ export function createPatchFunction (backend) {
       }
     }
   }
-
+// 遍历子虚拟节点，递归调用 createElm，
   function createChildren (vnode, children, insertedVnodeQueue) {
     if (Array.isArray(children)) {
       if (process.env.NODE_ENV !== 'production') {
@@ -300,7 +303,7 @@ export function createPatchFunction (backend) {
     }
     return isDef(vnode.tag)
   }
-
+  // 执行所有的create的钩子，并把vnode push到insertedVnodeQueue
   function invokeCreateHooks (vnode, insertedVnodeQueue) {
     for (let i = 0; i < cbs.create.length; ++i) {
       cbs.create[i](emptyNode, vnode)
@@ -697,6 +700,8 @@ export function createPatchFunction (backend) {
     }
   }
 
+  // 返回 patch 方法
+  // patch(旧的vnode，render之后得vnode，是否服务端渲染，reansition-group相关)
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
@@ -740,6 +745,7 @@ export function createPatchFunction (backend) {
           }
           // either not server-rendered, or hydration failed.
           // create an empty node and replace it
+          // 我们传入的oldNode其实是一个dom container，isRealElement为true，把oldNode转换成vnode对象
           oldVnode = emptyNodeAt(oldVnode)
         }
 

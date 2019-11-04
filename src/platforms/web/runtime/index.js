@@ -31,6 +31,7 @@ extend(Vue.options.directives, platformDirectives)
 extend(Vue.options.components, platformComponents)
 
 // install platform patch function
+// 在web平台上，是否是服务端渲染，也会影响这个方法。因为在服务端渲染中，没有真实的浏览器DOM环境，所以不需要把VNode转换成DOM，因此是一个空函数。
 Vue.prototype.__patch__ = inBrowser ? patch : noop
 
 // public mount method

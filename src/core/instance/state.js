@@ -35,6 +35,7 @@ const sharedPropertyDefinition = {
   set: noop
 }
 
+// 把props和data的属性代理到vm的实例上
 export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter () {
     return this[sourceKey][key]
@@ -45,6 +46,7 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
+// initState对props,methods,watch,data,computed等属性做了初始化.
 export function initState (vm: Component) {
   vm._watchers = []
   const opts = vm.$options
@@ -60,7 +62,9 @@ export function initState (vm: Component) {
     initWatch(vm, opts.watch)
   }
 }
-
+// initProps 遍历定义的props,遍历的过程主要做两个事
+// 1.defineReactive 把每个prop对应的值变为响应式,可以通过vm._props.xxx来访问
+// 2.proxy 把vm._props.xxx的访问代理到vm.xxx上
 function initProps (vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
   const props = vm._props = {}
@@ -109,6 +113,9 @@ function initProps (vm: Component, propsOptions: Object) {
   toggleObserving(true)
 }
 
+// data 的初始化主要过程也是做两件事，⼀个是对定义 data 函数返回对象的遍历，通过 proxy
+// 把每⼀个值 vm._data.xxx 都代理到 vm.xxx 上；另⼀个是调⽤ observe ⽅法观测整个 data
+// 的变化，把 data 也变成响应式，可以通过 vm._data.xxx 访问到定义 data 返回函数中对应的属性
 function initData (vm: Component) {
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'

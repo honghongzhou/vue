@@ -97,7 +97,7 @@ const componentVNodeHooks = {
 }
 
 const hooksToMerge = Object.keys(componentVNodeHooks)
-
+// 三个关键步骤  1.构造子类钩子函数 2.安装组件钩子函数 3.实例化vnode
 export function createComponent (
   Ctor: Class<Component> | Function | Object | void,
   data: ?VNodeData,
@@ -108,7 +108,15 @@ export function createComponent (
   if (isUndef(Ctor)) {
     return
   }
-
+  //baseCtor 实际上就是vue
+  // global-api/index.js Vue.options._base = Vue
+  // core/instance/init.js  
+      // vm.$options = mergeOptions(
+      //   resolveConstructorOptions(vm.constructor),
+      //   options || {},
+      //   vm
+      // )
+  // Vue.extend() global-api/extend.js
   const baseCtor = context.$options._base
 
   // plain options object: turn it into a constructor
@@ -187,6 +195,8 @@ export function createComponent (
 
   // return a placeholder vnode
   const name = Ctor.options.name || tag
+  // 实例化VNode
+  // 组件的vnode是没有children的
   const vnode = new VNode(
     `vue-component-${Ctor.cid}${name ? `-${name}` : ''}`,
     data, undefined, undefined, undefined, context,
@@ -222,7 +232,10 @@ export function createComponentInstanceForVnode (
   }
   return new vnode.componentOptions.Ctor(options)
 }
-
+// 安装子类构造函数
+// installComponentHooks的过程就是把componentVNodeHooks中的钩子函数合并到data.hook中，
+// 在Vnode执行patch的过程中执行相关的钩子函数。
+// 合并的策略：如果某个钩子函数已存在data.hook中，那么使用mergeHook合并（在最终执行时，依次执行这两个钩子函数）
 function installComponentHooks (data: VNodeData) {
   const hooks = data.hook || (data.hook = {})
   for (let i = 0; i < hooksToMerge.length; i++) {

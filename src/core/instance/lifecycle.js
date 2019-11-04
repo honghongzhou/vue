@@ -54,9 +54,12 @@ export function initLifecycle (vm: Component) {
   vm._isDestroyed = false
   vm._isBeingDestroyed = false
 }
-
+// 在created之后才可以访问数据,mounted之后可以访问DOM,在destroy中可以做一些定时器销毁
 export function lifecycleMixin (Vue: Class<Component>) {
-  // update
+  // update 调用的时间： 1：首次渲染  2：数据更新渲染  
+  // 作用：把vnode渲染成真实的dom
+  // 核心 __patch__  在不同的平台上 web（src/platforms/web/runtime/index.js） weex 上定义是不同的。
+  // patch四个参数（旧的vnode节点 它可以不存在或者是dom对象，_render后返回的vnode，是否是服务端渲染，给 transition-group 用的）
   Vue.prototype._update = function (vnode: VNode, hydrating?: boolean) {
     const vm: Component = this
     const prevEl = vm.$el
@@ -168,6 +171,7 @@ export function mountComponent (
       }
     }
   }
+  //在render渲染之前调用了beforeMount钩子函数,在update之后,把vnode patch映射到真实的dom后执行了mounted钩子函数
   callHook(vm, 'beforeMount')
 
   let updateComponent
@@ -209,6 +213,7 @@ export function mountComponent (
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // vm.$vnode == null 表示这不是一次组件的初始化过程
   if (vm.$vnode == null) {
     vm._isMounted = true
     callHook(vm, 'mounted')
@@ -336,7 +341,7 @@ export function deactivateChildComponent (vm: Component, direct?: boolean) {
     callHook(vm, 'deactivated')
   }
 }
-
+// 调用callHook执行vue的生命周期钩子函数
 export function callHook (vm: Component, hook: string) {
   // #7573 disable dep collection when invoking lifecycle hooks
   pushTarget()

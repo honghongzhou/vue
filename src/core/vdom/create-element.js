@@ -98,6 +98,9 @@ export function _createElement (
     children = simpleNormalizeChildren(children)
   }
   let vnode, ns
+  // tag:
+  // 如果是一个普通的html标签，则会实例化一个普通的vnode
+  // 否则通过createComponent创建一个组件vnode
   if (typeof tag === 'string') {
     let Ctor
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag)

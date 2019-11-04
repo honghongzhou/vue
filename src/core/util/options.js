@@ -143,6 +143,7 @@ strats.data = function (
 /**
  * Hooks and props are merged as arrays.
  */
+// 钩子函数的合并策略
 function mergeHook (
   parentVal: ?Array<Function>,
   childVal: ?Function | ?Array<Function>

@@ -15,6 +15,7 @@ let uid = 0
 // 合并配置，初始化生命周期，初始化事件中心，初始化渲染，初始化data，props，computed， watcher等
 // 在初始化到最后，检测到如果有el属性，就调用vm.$mount方法挂在到vm，挂载的目标是最终将模板渲染成DOM
 export function initMixin (Vue: Class<Component>) {
+  // new Vue(options) 调用场景有两种 1:外部主动调用的方式实例化一个vue对象 2:组件过程中内部调用实例化一个vue对象
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     // a uid
@@ -37,6 +38,7 @@ export function initMixin (Vue: Class<Component>) {
       // internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
+      // 
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor),
         options || {},
@@ -54,9 +56,9 @@ export function initMixin (Vue: Class<Component>) {
     initLifecycle(vm)
     initEvents(vm)
     initRender(vm)
-    callHook(vm, 'beforeCreate')
+    callHook(vm, 'beforeCreate') //在initState钩子函数之前调用,所以此时无法获取data等属性,也不能调用methods里面的方法
     initInjections(vm) // resolve injections before data/props
-    initState(vm)
+    initState(vm)  // 初始化props,data,methods,computed,watch等属性
     initProvide(vm) // resolve provide after data/props
     callHook(vm, 'created')
 
@@ -72,7 +74,8 @@ export function initMixin (Vue: Class<Component>) {
     }
   }
 }
-
+// vm.constructor就是子组件的构造函数Sub
+// initInternalComponent 只做了简单的对象赋值
 export function initInternalComponent (vm: Component, options: InternalComponentOptions) {
   const opts = vm.$options = Object.create(vm.constructor.options)
   // doing this because it's faster than dynamic enumeration.
