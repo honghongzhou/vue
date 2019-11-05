@@ -10,6 +10,8 @@ let uid = 0
  * A dep is an observable that can have multiple
  * directives subscribing to it.
  */
+// 定义了一些属性和方法
+// target是全局唯一一个watcher
 export default class Dep {
   static target: ?Watcher;
   id: number;

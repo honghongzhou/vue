@@ -34,6 +34,8 @@ export function toggleObserving (value: boolean) {
  * object's property keys into getter/setters that
  * collect dependencies and dispatch updates.
  */
+// 它的作用是给对象添加 getter 和 setter 属性，，用于依赖收集和派发的更新
+// def core/util/lang.js
  export class Observer {
   value: any;
   dep: Dep;
@@ -108,7 +110,7 @@ function copyAugment (target: Object, src: Object, keys: Array<string>) {
  * or the existing observer if the value already has one.
  */
 // 用来监测数据的变化
-// observe的作用就是给非vnode的对象类型数据添加一个observe
+// observe的作用就是给非vnode的对象类型数据添加一个Observer
 export function observe (value: any, asRootData: ?boolean): Observer | void {
   if (!isObject(value) || value instanceof VNode) {
     return
@@ -134,6 +136,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
 /**
  * Define a reactive property on an Object.
  */
+// 定义一个响应式对象，给对象动态添加getter和setter
 export function defineReactive (
   obj: Object,
   key: string,

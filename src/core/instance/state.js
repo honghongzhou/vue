@@ -35,7 +35,8 @@ const sharedPropertyDefinition = {
   set: noop
 }
 
-// 把props和data的属性代理到vm的实例上
+// 把props和data的属性代理到vm的实例上 proxy(vm, `_props`, key)
+// 通过Object.defineProperty把 target[sourceKey][key]的读写变成了对target[key]的读写
 export function proxy (target: Object, sourceKey: string, key: string) {
   sharedPropertyDefinition.get = function proxyGetter () {
     return this[sourceKey][key]
