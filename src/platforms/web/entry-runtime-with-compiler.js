@@ -16,7 +16,7 @@ const idToTemplate = cached(id => {
 // 缓存了原型上的$mount
 // 对el做了限制，vue不能挂在在html和body上
 // 如果没有定义render方法，则会把el或者template转换成render，这个过程是vue在线编译的过程，调用compileToFunctions方法实现的，最后调用原型上的$mount进行挂载。
-const mount = Vue.prototype.$mount
+const mount = Vue.prototype.$mount  //(原生的mount方法在web/runtime/index.js)
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
