@@ -123,6 +123,7 @@ export function createPatchFunction (backend) {
 
   let creatingElmInVPre = 0
   // crateElm通过虚拟节点创建真实的dom，并插入它的父节点中。
+  // 49
   function createElm (
     vnode,
     insertedVnodeQueue,

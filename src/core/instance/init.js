@@ -70,7 +70,6 @@ export function initMixin (Vue: Class<Component>) {
     }
     // $mount的实现方式跟平台和构建方式相关（带compiler版本的实现在entry-runtime-with-compiler.js里面）
     if (vm.$options.el) {
-      console.log(vm.$options.el)
       vm.$mount(vm.$options.el)
     }
   }

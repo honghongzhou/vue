@@ -46,7 +46,7 @@ export function createElement (
 }
 // 两个重要的流程
 // 1.children的规范化:virtual dom是一个树状结构,每一个vnode可能都有若干个子节点,这些子节点也应该是vnode类型,_createElement的第四个参数是children为任意类型.因此我们需要把它们规范成vnode类型.
-//  2.vnode的创建
+// 2.vnode的创建
 // createElement创建vnode过程,vnode的children也是vnode类型,这样就形成了一个vnode tree
 export function _createElement (
   context: Component,

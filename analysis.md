@@ -21,6 +21,26 @@
 ## vue 的一个核心 数据驱动
 * 数据驱动是指视图是由数据驱动生成，我们对视图的修改不会直接操作DOM，而是修改数据。
 * 这里包含两块：1.模板和数据渲染成最终的dom 2.数据更新驱动视图变化
+* 模板和数据渲染成最终的DOM
+```
+    <div id="app">
+        {{ message }}
+    </div>
+
+```
+```
+    var app = new Vue({
+        el: '#app',
+        data: {
+            message: 'Hello Vue!'
+        }
+    })
+```
+> 1. new Vue 初始化一个vue的实例，然后进行init
+> 2. init初始化生命周期,data,methods,watch等等，之后如果检测到el，就使用$mount进行挂载
+> 3. 在$mount中，如果没有定义render方法，则会把el或者template通过compileToFunctions转换成render，最后调用原型上的$mount进行挂在
+> 4. 原型上的$mount主要是通过vm._render()生成vnode，再通过vm._update()内部使用patch()进行渲染
+
 ## 模板和数据如何最终渲染成最终的DOM
 ## nodeType
 ## Virtual DOM
