@@ -1,5 +1,6 @@
 # vue源码解析
 ## flow
+* 目的：在babel编译的时候就发现由于类型引起的bug（ES6编译成js）
 * facebook出品得javascript静态类型检查工具
 * flow的两种工作方式 1. 类型推断  2. 类型注释
 * .flowconfig
