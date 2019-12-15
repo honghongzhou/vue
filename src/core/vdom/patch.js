@@ -751,10 +751,10 @@ export function createPatchFunction (backend) {
         }
 
         // replacing existing element
-        const oldElm = oldVnode.elm
-        const parentElm = nodeOps.parentNode(oldElm)
+        const oldElm = oldVnode.elm //id app
+        const parentElm = nodeOps.parentNode(oldElm) //body
 
-        // create new node
+        // create new node 将vnode挂载到真实的dom上
         createElm(
           vnode,
           insertedVnodeQueue,

@@ -46,7 +46,7 @@ export function normalizeChildren (children: any): ?Array<VNode> {
 function isTextNode (node): boolean {
   return isDef(node) && isDef(node.text) && isFalse(node.isComment)
 }
-
+// 把children变为一维数组
 function normalizeArrayChildren (children: any, nestedIndex?: string): Array<VNode> {
   const res = []
   let i, c, lastIndex, last

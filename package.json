@@ -1,9 +1,9 @@
 {
   "name": "vue",
-  "version": "2.6.10",
+  "version": "2.6.10", 
   "description": "Reactive, component-oriented view layer for modern web interfaces.",
   "main": "dist/vue.runtime.common.js",
-  "module": "dist/vue.runtime.esm.js",
+  "module": "dist/vue.runtime.esm.js", //2以上作为默认入口
   "unpkg": "dist/vue.js",
   "jsdelivr": "dist/vue.js",
   "typings": "types/index.d.ts",
