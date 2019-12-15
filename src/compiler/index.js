@@ -12,6 +12,8 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   template: string,
   options: CompilerOptions
 ): CompiledResult {
+  // 编译核心的三步
+  // parse:
   const ast = parse(template.trim(), options)
   if (options.optimize !== false) {
     optimize(ast, options)

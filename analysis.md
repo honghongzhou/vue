@@ -62,3 +62,10 @@
 ## proxy
 ## _createElement data参数不允许是响应式的
 ## createEmptyVNode 注释节点 注释vnode
+## render方法生成vnode，如何将一个字符串或者是vue的指令解析成js
+## 组件化
+## 生命周期
+> lifecycle.js callhook init.js lifecycle.js patch.js(invokeInsertHook)
+## 编译
+> 1. 编译入口函数的位置 （enrty-runtime-with-compiler.js compileToFunctions）
+    
