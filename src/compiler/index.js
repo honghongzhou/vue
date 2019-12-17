@@ -13,7 +13,9 @@ export const createCompiler = createCompilerCreator(function baseCompile (
   options: CompilerOptions
 ): CompiledResult {
   // 编译核心的三步
-  // parse:
+  // parse:解析模板字符串生成ast
+  // optimize： 优化语法树
+  // 生成代码
   const ast = parse(template.trim(), options)
   if (options.optimize !== false) {
     optimize(ast, options)

@@ -40,7 +40,7 @@
 ```
 > 1. new Vue 初始化一个vue的实例，然后进行init （为什么我们可以通过this.a访问data上的a,因为在initState初始化的时候，对数据使用了proxy进行了代理）
 > 2. init初始化生命周期,data,methods,watch等等，之后如果检测到el，就使用$mount进行挂载 （entry-runtime-with-compiler.js）
-> 3. vue实例挂载的实现，在$mount中，如果没有定义render方法，则会把el或者template通过compileToFunctions转换成render，最后调用原型上的$mount进行挂在
+> 3. vue实例挂载的实现，在$mount中，如果没有定义render方法，则会把template通过compileToFunctions转换成render，最后调用原型上的$mount进行挂在
 > 4. 原型上的$mount主要是通过vm._render()生成vnode，再通过vm._update()内部使用patch()进行渲染
 > 5. render函数（src/core/instance/render.js）(从$options拿到render函数->render.call(执行上下文，参数)->$createElement在initRender中，initRender在init初始化->vm._renderProxy也在init方法中，生产环境中就是vm,开发环境es6的proxy->hasProxy判断浏览器支不支持proxy)
 > 6. createElment
