@@ -12,10 +12,11 @@ let uid = 0
  */
 // 定义了一些属性和方法
 // target是全局唯一一个watcher
+// Dep 相当于对 Watcher 的一个管理
 export default class Dep {
   static target: ?Watcher;
   id: number;
-  subs: Array<Watcher>;
+  subs: Array<Watcher>;  //Watcher数组
 
   constructor () {
     this.id = uid++
@@ -35,7 +36,7 @@ export default class Dep {
       Dep.target.addDep(this)
     }
   }
-
+// 遍历所有的Watcher数组， 调用update
   notify () {
     // stabilize the subscriber list first
     const subs = this.subs.slice()

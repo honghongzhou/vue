@@ -23,6 +23,7 @@ let uid = 0
  * and fires callback when the expression value changes.
  * This is used for both the $watch() api and directives.
  */
+// 定义了一些和Dep相关的属性（deps，newDeps，depIds，newDepIds）
 export default class Watcher {
   vm: Component;
   expression: string;
@@ -98,6 +99,7 @@ export default class Watcher {
   /**
    * Evaluate the getter, and re-collect dependencies.
    */
+  // this.getter  === updateComponent
   get () {
     pushTarget(this)
     let value
@@ -161,6 +163,7 @@ export default class Watcher {
    * Subscriber interface.
    * Will be called when a dependency changes.
    */
+  // 
   update () {
     /* istanbul ignore else */
     if (this.lazy) {

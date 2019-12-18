@@ -68,4 +68,11 @@
 > lifecycle.js callhook init.js lifecycle.js patch.js(invokeInsertHook)
 ## 编译
 > 1. 编译入口函数的位置 （enrty-runtime-with-compiler.js compileToFunctions）
-    
+## 响应式原理（数据的变更驱动DOM的变化）
+### 响应式对象 (什么是响应式对象，实现响应式对象的一个过程)
+> Object.defineProperty(obj,prop,descriptor) vue初始化 initState initProps initData proxy observe Observe defineReactive 
+> 响应式对象的核心：利用Object.defineProperty给数据添加了getter和setter，目的就是为了让我们访问数据以及写数据的时候能做一些逻辑，getter做的是依赖收集，setter做的是派发更新
+### 依赖收集
+> 目的：当我们修改数据的时候，可以对相关的依赖派发更新
+### 派发更新
+> 目的：当数据发生变化的时候，触发setter逻辑，把在依赖过程中订阅的所有的观察者，也就是watcher，触发他们的update过程，这个过程又利用了队列做了一系列的优化，在nextTick后执行所有的watcher的run，最后执行它们的回调函数。

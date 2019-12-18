@@ -111,6 +111,7 @@ function initProps (vm: Component, propsOptions: Object) {
       proxy(vm, `_props`, key)
     }
   }
+  // observe/index.js
   toggleObserving(true)
 }
 

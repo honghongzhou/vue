@@ -68,6 +68,8 @@ if (inBrowser && !isIE) {
 /**
  * Flush both queues and run the watchers.
  */
+// 队列排序
+// 队列遍历
 function flushSchedulerQueue () {
   currentFlushTimestamp = getNow()
   flushing = true
@@ -161,6 +163,8 @@ function callActivatedHooks (queue) {
  * Jobs with duplicate IDs will be skipped unless it's
  * pushed when the queue is being flushed.
  */
+// 引入队列，并不会每次数据改变都触发watcher的回调，⽽是把这些 watcher 先添加到⼀个队列⾥，然后在 nextTick 后执
+// ⾏ flushSchedulerQueue
 export function queueWatcher (watcher: Watcher) {
   const id = watcher.id
   if (has[id] == null) {

@@ -34,6 +34,7 @@ export function toggleObserving (value: boolean) {
  * object's property keys into getter/setters that
  * collect dependencies and dispatch updates.
  */
+// 观察者
 // 它的作用是给对象添加 getter 和 setter 属性，，用于依赖收集和派发的更新
 // def core/util/lang.js
  export class Observer {
@@ -73,6 +74,7 @@ export function toggleObserving (value: boolean) {
   /**
    * Observe a list of Array items.
    */
+  // 遍历数组的元素，递归调用观察者
   observeArray (items: Array<any>) {
     for (let i = 0, l = items.length; i < l; i++) {
       observe(items[i])
@@ -137,6 +139,7 @@ export function observe (value: any, asRootData: ?boolean): Observer | void {
  * Define a reactive property on an Object.
  */
 // 定义一个响应式对象，给对象动态添加getter和setter
+// get 依赖收集  set  派发更新
 export function defineReactive (
   obj: Object,
   key: string,
@@ -162,6 +165,7 @@ export function defineReactive (
   Object.defineProperty(obj, key, {
     enumerable: true,
     configurable: true,
+    // 依赖的收集(dep.depend())
     get: function reactiveGetter () {
       const value = getter ? getter.call(obj) : val
       if (Dep.target) {
@@ -175,6 +179,7 @@ export function defineReactive (
       }
       return value
     },
+    // 派发更新
     set: function reactiveSetter (newVal) {
       const value = getter ? getter.call(obj) : val
       /* eslint-disable no-self-compare */
