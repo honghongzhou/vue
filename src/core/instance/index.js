@@ -13,7 +13,7 @@ function Vue (options) {
   }
   this._init(options)
 }
-
+// 每一个vue的mixin都是往vue的原型上挂载方法
 initMixin(Vue)
 stateMixin(Vue)
 eventsMixin(Vue)
