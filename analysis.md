@@ -72,7 +72,7 @@
 > 1. 编译入口函数的位置 （enrty-runtime-with-compiler.js compileToFunctions）
 ## 响应式原理（数据的变更驱动DOM的变化）
 ### 响应式对象 (什么是响应式对象，实现响应式对象的一个过程)
-> Object.defineProperty(obj,prop,descriptor) vue初始化 initState initProps initData proxy observe Observe defineReactive 
+> Object.defineProperty(obj,prop,descriptor) vue初始化 initState initProps initData proxy observe Observe defineReactive observe断点调试
 > 响应式对象的核心：利用Object.defineProperty给数据添加了getter和setter，目的就是为了让我们访问数据以及写数据的时候能做一些逻辑，getter做的是依赖收集，setter做的是派发更新
 ### 依赖收集
 > 目的：当我们修改数据的时候，可以对相关的依赖派发更新
