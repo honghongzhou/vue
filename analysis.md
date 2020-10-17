@@ -16,8 +16,9 @@
 * run build 构建的入口文件 script/build.js
 * roolup 和 webpack 的区别：roolup 和 webpack 都是一个构建工具，但是webpack会更加的强大，webpack会把图片，js等静态资源都会编译成javascript，但是roolup更适合一种javascript库的编译，只处理js部分，因此更加轻量。（构建的代码：package.json）
 ## vue中的Runtime Only和Runtime + Compiler
-* Runtime Only：使用Runtim Only版本的vue.js的时候，通常需要借助webpack的vue-loader工具把.vue文件转换成javascript。因为是在编译阶段做的，所以它只包含vue.js代码，因此代码体积比较轻量。
-* Runtime Compiler：如果我们没有对代码做预编译，然而我们又使用了template属性，并传入一个字符串，则需要在客户端编译模板。   
+* Runtime Only：使用Runtim Only版本的vue.js的时候，通常需要借助webpack的vue-loader工具把.vue文件转换成javascript。因为是在编译阶段做的，所以它只包含vue.js代码，因此代码体积比较轻量。（提前编译）
+* Runtime Compiler：如果我们没有对代码做预编译，然而我们又使用了template属性，并传入一个字符串，则需要在客户端编译模板。  （用到时才编译）
+*  通常我们的项目中，我们一般用Runtime Only进行开发。使用vue-loader进行提前编译。
 ## vue中为什么用function而不用ES6中的Class去实现
 * 我们可以看到很多的 xxxMixin 函数的调用，并把vue作为参数传入，它们的功能都是给vue的prototype上扩展一些方法，vue按功能把这些扩展分散到多个模块中实现，而不是在一个模块中实现所有，这种方法是 Class 难以实现的。这么做的好处是非常方便代码的管理和维护。
 ## vue的入口及本质
