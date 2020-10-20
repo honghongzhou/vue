@@ -70,11 +70,10 @@
 * virtual dom就是用原生的js对象去描述一个dom节点，所以它比创建一个dom的代价要低很多。在vue.js中，virtual dom用VNode这样一个class去定义的。
 * vnode的create是通过之前提到的createElement创建的。
 ## createElement
-## 响应式对象
-## proxy
-## _createElement data参数不允许是响应式的
-## createEmptyVNode 注释节点 注释vnode
-## render方法生成vnode，如何将一个字符串或者是vue的指令解析成js
+* crateElement创建VNode过程，每一个VNode都有一个children，每个children也是VNode，这样就形成了一个VNode tree，它很好的描述了我们的DOM tree。
+## update
+## 响应式原理
+* vue中的响应式是应用了ES5中的Object.defineProperty。这也就是为什么vue.js为什么不能兼容IE8以下的浏览器的原因。
 ## 组件化
 ## 生命周期
 > lifecycle.js callhook init.js lifecycle.js patch.js(invokeInsertHook)
